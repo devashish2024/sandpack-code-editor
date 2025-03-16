@@ -109,7 +109,7 @@ export default function Editor() {
           </Tabs>
         </div>
 
-        <div className="h-full">
+        <div className="md:col-span-3 h-full overflow-hidden">
           <Sandpack
             theme={githubLight}
             template="react"
