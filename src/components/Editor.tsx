@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Sandpack } from "@codesandbox/sandpack-react";
 import { githubLight } from "@codesandbox/sandpack-themes";
-import { Loader2 } from "lucide-react";
 
 import { FilesManager } from "@/components/FilesManager";
 import { Terminal } from "@/components/Terminal";
@@ -11,9 +10,9 @@ import { Suggestions } from "@/components/Suggestions";
 import { initialFiles } from "@/data/files";
 
 export default function Editor() {
-  const [files, setFiles] = useState(initialFiles);
+  const [files, setFiles] = useState<Record<string, string>>(initialFiles);
   const [activeFile, setActiveFile] = useState("/App.js");
-  const [isLoading, setIsLoading] = useState(false);
+
   const [dependencies, setDependencies] = useState<Record<string, string>>({});
   const [mounted, setMounted] = useState(false);
 
@@ -25,10 +24,6 @@ export default function Editor() {
   if (!mounted) {
     return null;
   }
-
-  const handleFileChange = (newFiles: Record<string, string>) => {
-    setFiles(newFiles);
-  };
 
   const handleAddFile = (filename: string, content: string) => {
     setFiles((prev: any) => ({
@@ -114,31 +109,24 @@ export default function Editor() {
           </Tabs>
         </div>
 
-        <div className="md:col-span-3 h-full overflow-hidden">
-          {isLoading ? (
-            <div className="flex items-center justify-center h-full">
-              <Loader2 className="h-8 w-8 animate-spin" />
-            </div>
-          ) : (
-            <Sandpack
-              theme={githubLight}
-              template="react"
-              files={files}
-              customSetup={{
-                dependencies: dependencies,
-              }}
-              options={{
-                showNavigator: false,
-                showTabs: true,
-                showLineNumbers: true,
-                showInlineErrors: true,
-                wrapContent: true,
-                editorHeight: "100vh",
-                activeFile: activeFile,
-              }}
-              className="h-full"
-            />
-          )}
+        <div className="h-full">
+          <Sandpack
+            theme={githubLight}
+            template="react"
+            files={files}
+            customSetup={{
+              dependencies: dependencies,
+            }}
+            options={{
+              showNavigator: false,
+              showTabs: true,
+              showLineNumbers: true,
+              showInlineErrors: true,
+              wrapContent: true,
+              editorHeight: "100vh",
+              activeFile: activeFile,
+            }}
+          />
         </div>
       </div>
     </div>

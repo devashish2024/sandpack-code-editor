@@ -14,7 +14,6 @@ interface TerminalProps {
 
 export function Terminal({ onAddDependency }: TerminalProps) {
   const terminalRef = useRef<HTMLDivElement>(null);
-  const [terminal, setTerminal] = useState<XTerm | null>(null);
   const [command, setCommand] = useState("");
   const [history, setHistory] = useState<string[]>([
     "Welcome to terminal.",
@@ -39,8 +38,6 @@ export function Terminal({ onAddDependency }: TerminalProps) {
     term.loadAddon(fitAddon);
     term.open(terminalRef.current);
     fitAddon.fit();
-
-    setTerminal(term);
 
     term.writeln("Welcome to terminal.");
     term.writeln("Type 'npm install <package-name>' to install packages.");
